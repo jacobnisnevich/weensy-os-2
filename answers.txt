@@ -1,13 +1,13 @@
-Name:
-UCLA ID:
+Name: Jacob Nisnevich
+UCLA ID: 804275355
 
-Collaborators:
+Collaborators: -
 
 -------------------------------------------------------------------------------
 
 Response to Exercise 1:
 
-The name of the scheduling algorithm is:
+The name of the scheduling algorithm is: Round Robin Scheduling
 
 
 (Exercise 2 is a coding exercise)
