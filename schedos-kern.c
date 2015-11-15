@@ -230,12 +230,14 @@ schedule(void)
 				run(&proc_array[pid]);
 		}
 	} else if (scheduling_algorithm == 1) {
+		pid = 1
+
 		while (1) {
 			if (proc_array[pid].p_state == P_RUNNABLE) {
 				run(&proc_array[pid]);
-			} else {
-				pid = (pid + 1) % NPROCS;
 			}
+			
+			pid = (pid + 1) % NPROCS;
 		}
 	}
 
