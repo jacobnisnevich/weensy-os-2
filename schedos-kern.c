@@ -242,20 +242,20 @@ schedule(void)
 		}
 	} else if (scheduling_algorithm == __EXERCISE_4A__) {
 		while (1) {
-			// Get highest priority process that is runnable
-
-			pid_t i = 0;
+			pid = 0;
 			pid_t max_pid = 0;
 			int max_pid_priority = 0;
 
-			for (; i < NPROCS; i++) {
-				if (proc_array[i].p_priority > max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
-					pid_t max_pid = i;
-					max_pid_priority = proc_array[i].p_priority;
+			// Get highest priority process that is runnable
+			for (; pid < NPROCS; pid++) {
+				if (proc_array[pid].p_priority > max_pid_priority && proc_array[pid].p_state == P_RUNNABLE) {
+					pid_t max_pid = pid;
+					max_pid_priority = proc_array[pid].p_priority;
 				}
 			}
 
-			run(&proc_array[pid]);
+			// Run max_pid
+			run(&proc_array[max_pid]);
 		}
 	}
 
