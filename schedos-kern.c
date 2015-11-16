@@ -52,10 +52,10 @@ int scheduling_algorithm;
 // UNCOMMENT THESE LINES IF YOU DO EXERCISE 4.A
 // Use these #defines to initialize your implementation.
 // Changing one of these lines should change the initialization.
-// #define __PRIORITY_1__ 1
-// #define __PRIORITY_2__ 2
-// #define __PRIORITY_3__ 3
-// #define __PRIORITY_4__ 4
+#define __PRIORITY_1__ 1
+#define __PRIORITY_2__ 2
+#define __PRIORITY_3__ 3
+#define __PRIORITY_4__ 4
 
 // UNCOMMENT THESE LINES IF YOU DO EXERCISE 4.B
 // Use these #defines to initialize your implementation.
@@ -127,7 +127,7 @@ start(void)
 	//   41 = p_priority algorithm (exercise 4.a)
 	//   42 = p_share algorithm (exercise 4.b)
 	//    7 = any algorithm that you may implement for exercise 7
-	scheduling_algorithm = 1;
+	scheduling_algorithm = __EXERCISE_4A__;
 
 	// Switch to the first process.
 	run(&proc_array[1]);
@@ -219,7 +219,7 @@ schedule(void)
 {
 	pid_t pid = current->p_pid;
 
-	if (scheduling_algorithm == 0) {	
+	if (scheduling_algorithm == __EXERCISE_1__) {	
 		while (1) {
 			pid = (pid + 1) % NPROCS;
 
@@ -229,7 +229,8 @@ schedule(void)
 			if (proc_array[pid].p_state == P_RUNNABLE)
 				run(&proc_array[pid]);
 		}
-	} else if (scheduling_algorithm == 1) {
+	} else if (scheduling_algorithm == __EXERCISE_2__) {
+		// Start with the first pid (highest priority)
 		pid = 1;
 
 		while (1) {
@@ -238,6 +239,23 @@ schedule(void)
 			}
 			
 			pid = (pid + 1) % NPROCS;
+		}
+	} else if (scheduling_algorithm == __EXERCISE_4A__) {
+		while (1) {
+			// Get highest priority process that is runnable
+
+			pid_t i = 0;
+			pid_t max_pid = 0;
+			int max_pid_priority = 0;
+
+			for (; i < NPROCS; i++) {
+				if (proc_array[i].p_priority > max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
+					pid_t max_pid = i;
+					max_pid_priority = proc_array[i].p_priority;
+				}
+			}
+
+			run(&proc_array[pid]);
 		}
 	}
 
