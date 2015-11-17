@@ -258,23 +258,13 @@ schedule(void)
 				}
 			}
 
-			pid_t* max_pids = malloc(sizeof(pid_t) * NPROCS);
-			max_pids[NPROCS] = NULL;
-
-			// Get array of processes with max_pid_priority
-			for (i = 0; i < NPROCS; i++) {
-				if (proc_array[i].p_priority == max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
-					max_pids[i] = 1;
-				} else {
-					max_pids[i] = 0;
-				}
-			}
-
 			pid = (pid + 1) % NPROCS;
 
-			// Run if in max_pids
-			if (max_pids[pid] == 1) {
-				run(&proc_array[pid]);
+			// Run processes that have max_pid_priority as their priority
+			for (i = 0; i < NPROCS; i++) {
+				if (proc_array[i].p_priority == max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
+					run(&proc_array[pid]);
+				}
 			}
 		}
 	}
