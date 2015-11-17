@@ -112,6 +112,23 @@ start(void)
 		// Load process and set EIP, based on ELF image
 		program_loader(i - 1, &proc->p_registers.reg_eip);
 
+
+		// Set priorities
+		switch(i) {
+			case 1:
+				proc->p_priority = 4;
+				break;
+			case 2:
+				proc->p_priority = 3;
+				break;
+			case 3:
+				proc->p_priority = 2;
+				break;
+			case 4:
+				proc->p_priority = 1;
+				break;
+		}
+
 		// Mark the process as runnable!
 		proc->p_state = P_RUNNABLE;
 	}
