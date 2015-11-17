@@ -27,12 +27,9 @@
 // (exercise 8 code)
 // #endif
 
-
 void
 start(void)
 {
-	sys_priority(1)
-
 	int i;
 
 	for (i = 0; i < RUNCOUNT; i++) {

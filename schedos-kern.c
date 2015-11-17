@@ -253,7 +253,7 @@ schedule(void)
 
 			// Get highest priority that is runnable
 			for (; i < NPROCS; i++) {
-				if (proc_array[i].p_priority > max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
+				if (proc_array[i].p_priority < max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
 					max_pid_priority = proc_array[i].p_priority;
 				}
 			}
