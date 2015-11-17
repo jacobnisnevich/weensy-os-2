@@ -67,10 +67,10 @@ int scheduling_algorithm;
 
 // USE THESE VALUES FOR SETTING THE scheduling_algorithm VARIABLE.
 #define __EXERCISE_1__   0  // the initial algorithm
-#define __EXERCISE_2__   2  // strict priority scheduling (exercise 2)
-#define __EXERCISE_4A__ 41  // p_priority algorithm (exercise 4.a)
-#define __EXERCISE_4B__ 42  // p_share algorithm (exercise 4.b)
-#define __EXERCISE_7__   7  // any algorithm for exercise 7
+#define __EXERCISE_2__   1  // strict priority scheduling (exercise 2)
+#define __EXERCISE_4A__  2  // p_priority algorithm (exercise 4.a)
+#define __EXERCISE_4B__  3  // p_share algorithm (exercise 4.b)
+#define __EXERCISE_7__   4  // any algorithm for exercise 7
 
 
 /*****************************************************************************
@@ -159,6 +159,10 @@ interrupt(registers_t *reg)
 
 	switch (reg->reg_intno) {
 
+	case INT_SYS_PRIORITY:
+		current->p_priority = reg->reg_eax;
+		run(current);
+
 	case INT_SYS_YIELD:
 		// The 'sys_yield' system call asks the kernel to schedule
 		// the next process.
@@ -241,21 +245,37 @@ schedule(void)
 			pid = (pid + 1) % NPROCS;
 		}
 	} else if (scheduling_algorithm == __EXERCISE_4A__) {
-		while (1) {
-			pid = 0;
-			pid_t max_pid = 0;
-			int max_pid_priority = 0;
+		pid = 0;
 
-			// Get highest priority process that is runnable
-			for (; pid < NPROCS; pid++) {
-				if (proc_array[pid].p_priority > max_pid_priority && proc_array[pid].p_state == P_RUNNABLE) {
-					pid_t max_pid = pid;
-					max_pid_priority = proc_array[pid].p_priority;
+		while (1) {	
+			int max_pid_priority = 0;
+			pid_t i = 0;
+
+			// Get highest priority that is runnable
+			for (; i < NPROCS; i++) {
+				if (proc_array[i].p_priority > max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
+					max_pid_priority = proc_array[i].p_priority;
 				}
 			}
 
-			// Run max_pid
-			run(&proc_array[max_pid]);
+			pid_t* max_pids = malloc(sizeof(pid_t) * NPROCS);
+			max_pids[NPROCS] = NULL;
+
+			// Get array of processes with max_pid_priority
+			for (i = 0; i < NPROCS; i++) {
+				if (proc_array[i].p_priority == max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
+					max_pids[i] = 1;
+				} else {
+					max_pids[i] = 0;
+				}
+			}
+
+			pid = (pid + 1) % NPROCS;
+
+			// Run if in max_pids
+			if (max_pids[pid] == 1) {
+				run(&proc_array[pid]);
+			}
 		}
 	}
 

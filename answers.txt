@@ -29,6 +29,8 @@ Did you complete Exercise 4A, Exercise 4B, or both for extra credit?
 
 Exercise 5:
 
+The process that prints the '4' character was interrupted, as it failed to print in the 5th cycle through the processes.
+
 
 (Exercise 6 is a coding exercise)
 
