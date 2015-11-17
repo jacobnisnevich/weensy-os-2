@@ -262,11 +262,11 @@ schedule(void)
 			pid = (pid + 1) % NPROCS;
 		}
 	} else if (scheduling_algorithm == __EXERCISE_4A__) {
-		pid = 0;
+		pid = 1;
 
 		while (1) {	
 			int max_pid_priority = 0;
-			pid_t i = 0;
+			pid_t i = 1;
 
 			// Get highest priority that is runnable
 			for (; i < NPROCS; i++) {
@@ -278,7 +278,7 @@ schedule(void)
 			pid = (pid + 1) % NPROCS;
 
 			// Run processes that have max_pid_priority as their priority
-			for (i = 0; i < NPROCS; i++) {
+			for (i = 1; i < NPROCS; i++) {
 				if (proc_array[i].p_priority == max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
 					run(&proc_array[pid]);
 				}
