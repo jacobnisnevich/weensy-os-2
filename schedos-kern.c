@@ -264,7 +264,7 @@ schedule(void)
 		pid = 0;
 
 		while (1) {	
-			int max_pid_priority = 0;
+			int max_pid_priority = __PRIORITY_4__;
 
 			// Get highest priority that is runnable
 			pid_t i;
