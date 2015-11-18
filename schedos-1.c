@@ -33,8 +33,18 @@ start(void)
 	int i;
 
 	for (i = 0; i < RUNCOUNT; i++) {
-		// Write characters to the console, yielding after each one.
+
+		// Get lock
+		while (atomic_swap(&lock, 1) != 0)
+			continue;
+
+		// Print char
 		*cursorpos++ = PRINTCHAR;
+
+		// Release lock
+		atomic_swap(&lock, 0);
+
+		// Yield after printing
 		sys_yield();
 	}
 
