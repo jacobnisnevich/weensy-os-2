@@ -112,20 +112,19 @@ start(void)
 		// Load process and set EIP, based on ELF image
 		program_loader(i - 1, &proc->p_registers.reg_eip);
 
-
 		// Set priorities
 		switch(i) {
 			case 1:
-				proc->p_priority = 4;
+				proc->p_priority = __PRIORITY_4__;
 				break;
 			case 2:
-				proc->p_priority = 3;
+				proc->p_priority = __PRIORITY_3__;
 				break;
 			case 3:
-				proc->p_priority = 2;
+				proc->p_priority = __PRIORITY_2__;
 				break;
 			case 4:
-				proc->p_priority = 1;
+				proc->p_priority = __PRIORITY_1__;
 				break;
 		}
 
@@ -262,14 +261,14 @@ schedule(void)
 			pid = (pid + 1) % NPROCS;
 		}
 	} else if (scheduling_algorithm == __EXERCISE_4A__) {
-		pid = 1;
+		pid = 0;
 
 		while (1) {	
 			int max_pid_priority = 0;
-			pid_t i = 1;
 
 			// Get highest priority that is runnable
-			for (; i < NPROCS; i++) {
+			pid_t i;
+			for (i = 0; i < NPROCS; i++) {
 				if (proc_array[i].p_priority < max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
 					max_pid_priority = proc_array[i].p_priority;
 				}
@@ -278,10 +277,8 @@ schedule(void)
 			pid = (pid + 1) % NPROCS;
 
 			// Run processes that have max_pid_priority as their priority
-			for (i = 1; i < NPROCS; i++) {
-				if (proc_array[i].p_priority == max_pid_priority && proc_array[i].p_state == P_RUNNABLE) {
-					run(&proc_array[pid]);
-				}
+			if (proc_array[pid].p_priority == max_pid_priority && proc_array[pid].p_state == P_RUNNABLE) {
+				run(&proc_array[pid]);
 			}
 		}
 	}
