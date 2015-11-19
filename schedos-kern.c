@@ -128,7 +128,7 @@ start(void)
 	//   41 = p_priority algorithm (exercise 4.a)
 	//   42 = p_share algorithm (exercise 4.b)
 	//    7 = any algorithm that you may implement for exercise 7
-	scheduling_algorithm = __EXERCISE_4B__;
+	scheduling_algorithm = __EXERCISE_4A__;
 
 	// Switch to the first process.
 	run(&proc_array[1]);
@@ -281,10 +281,10 @@ schedule(void)
 			pid = (pid + 1) % NPROCS;
 
 			// Run process if the run_times is < their share
-			//if (proc_array[pid].p_run_times < proc_array[pid].p_share && proc_array[pid].p_state == P_RUNNABLE) {
-			//	proc_array[pid].p_run_times++;
+			if (proc_array[pid].p_run_times < proc_array[pid].p_share && proc_array[pid].p_state == P_RUNNABLE) {
+				proc_array[pid].p_run_times++;
 				run(&proc_array[pid]);
-			//}
+			}
 			
 			// Reset the run times
 			for (pid = 0; pid < NPROCS; pid++) {
