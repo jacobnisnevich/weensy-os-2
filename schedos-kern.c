@@ -275,7 +275,7 @@ schedule(void)
 			}
 		}
 	} else if (scheduling_algorithm == __EXERCISE_4B__) {
-		pid = 0
+		pid = 0;
 
 		while (1) {
 			// Run process while their run_times is < their share
