@@ -88,7 +88,7 @@ start(void)
 
 	// Set up hardware (schedos-x86.c)
 	segments_init();
-	interrupt_controller_init(1);
+	interrupt_controller_init(0);
 	console_clear();
 
 	// Initialize process descriptors as empty
@@ -114,6 +114,7 @@ start(void)
 
 		// Mark the process as runnable!
 		proc->p_state = P_RUNNABLE;
+		proc->p_run_times = 0;
 	}
 
 	// Initialize the cursor-position shared variable to point to the
@@ -127,7 +128,7 @@ start(void)
 	//   41 = p_priority algorithm (exercise 4.a)
 	//   42 = p_share algorithm (exercise 4.b)
 	//    7 = any algorithm that you may implement for exercise 7
-	scheduling_algorithm = __EXERCISE_1__;
+	scheduling_algorithm = __EXERCISE_4B__;
 
 	// Switch to the first process.
 	run(&proc_array[1]);
@@ -161,6 +162,10 @@ interrupt(registers_t *reg)
 
 	case INT_SYS_PRIORITY:
 		current->p_priority = reg->reg_eax;
+		run(current);
+
+	case INT_SYS_SHARE:
+		current->p_share = reg->reg_eax;
 		run(current);
 
 	case INT_SYS_PRINTCHAR:
@@ -270,7 +275,25 @@ schedule(void)
 			}
 		}
 	} else if (scheduling_algorithm == __EXERCISE_4B__) {
+		pid = 0
 
+		while (1) {
+			// Run process while their run_times is < their share
+			for (; pid < NPROCS; pid++)
+			{
+				if (proc_array[pid].p_state == P_RUNNABLE && proc_array[pid].p_run_times < proc_array[pid].p_share)
+				{
+					proc_array[pid].p_run_times++;
+					run(&proc_array[pid]);
+				}
+			}
+			
+			// Reset the run times
+			for (pid = 0; pid < NPROCS; pid++)
+			{
+				proc_array[pid].p_run_times = 0;
+			}
+		}
 	}
 
 	// If we get here, we are running an unknown scheduling algorithm.

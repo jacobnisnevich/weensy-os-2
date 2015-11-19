@@ -31,7 +31,13 @@ typedef struct process {
 	procstate_t p_state;		// Process state; see above
 	int p_exit_status;		// Process's exit status
 
+	// Exercise 4A
 	int p_priority; // Process priority
+
+	// Exercise 4B
+	int p_share; // Process share
+	int p_run_times; // Process share
+
 } process_t;
 
 

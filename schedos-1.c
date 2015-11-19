@@ -22,6 +22,10 @@
 #define PRIORITY 4
 #endif
 
+#ifndef SHARE
+#define SHARE 1
+#endif
+
 // UNCOMMENT THE NEXT LINE TO USE EXERCISE 8 CODE INSTEAD OF EXERCISE 6
 #define __EXERCISE_8__
 
@@ -29,6 +33,7 @@ void
 start(void)
 {
 	sys_priority(PRIORITY);
+	sys_share(SHARE);
 
 	int i;
 

@@ -41,3 +41,7 @@ Anything else you'd like us to know:
 
 
 Extra credit exercises:
+
+Exercise 8:
+
+Implemented a system call for printing characters

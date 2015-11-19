@@ -11,4 +11,8 @@
 #define PRIORITY 3
 #endif
 
+#ifndef SHARE
+#define SHARE 2
+#endif
+
 #include "schedos-1.c"
