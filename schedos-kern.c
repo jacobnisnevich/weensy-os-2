@@ -275,13 +275,11 @@ schedule(void)
 			}
 		}
 	} else if (scheduling_algorithm == __EXERCISE_4B__) {
-		pid = 1;
-
 		while (1) {
 			// Run process while their run_times is < their share
-			for (; pid < NPROCS; pid++)
+			for (pid = 0; pid < NPROCS; pid++)
 			{
-				if (proc_array[pid].p_state == P_RUNNABLE && proc_array[pid].p_run_times < proc_array[pid].p_share)
+				if (proc_array[pid].p_run_times < proc_array[pid].p_share && proc_array[pid].p_state == P_RUNNABLE)
 				{
 					proc_array[pid].p_run_times++;
 					run(&proc_array[pid]);
