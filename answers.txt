@@ -26,7 +26,7 @@ Exercise 4:
 
 Did you complete Exercise 4A, Exercise 4B, or both for extra credit?
 
-4A
+Both exercises were implemented
 
 Exercise 5:
 

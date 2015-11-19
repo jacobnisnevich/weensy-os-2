@@ -279,12 +279,12 @@ schedule(void)
 
 		while (1) {
 			pid = (pid + 1) % NPROCS;
-			
-			// Run process while their run_times is < their share
-			if (proc_array[pid].p_run_times < proc_array[pid].p_share && proc_array[pid].p_state == P_RUNNABLE) {
-				proc_array[pid].p_run_times++;
+
+			// Run process if the run_times is < their share
+			//if (proc_array[pid].p_run_times < proc_array[pid].p_share && proc_array[pid].p_state == P_RUNNABLE) {
+			//	proc_array[pid].p_run_times++;
 				run(&proc_array[pid]);
-			}
+			//}
 			
 			// Reset the run times
 			for (pid = 0; pid < NPROCS; pid++) {
