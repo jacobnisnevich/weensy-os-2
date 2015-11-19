@@ -23,7 +23,7 @@
 #endif
 
 // UNCOMMENT THE NEXT LINE TO USE EXERCISE 8 CODE INSTEAD OF EXERCISE 6
-// #define __EXERCISE_8__
+#define __EXERCISE_8__
 
 void
 start(void)
@@ -50,6 +50,9 @@ start(void)
 		sys_yield();
 
 		#else
+
+		// Make system call to prin character
+		sys_printchar(PRINTCHAR);
 
 		#endif
 	}

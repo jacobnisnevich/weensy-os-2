@@ -80,27 +80,35 @@ sys_priority(int priority)
 
 
 /*****************************************************************************
- * sys_share(???)
+ * sys_shareshare
  *
- *   IF YOU IMPLEMENT EXERCISE 4.B, NAME YOUR SYSTEM CALL sys_share .
+ *   Assigns a priority (1 to 4) 
  *
  *****************************************************************************/
 
+static inline void
+sys_priority(int share)
+{
+	asm volatile("int %0\n"
+		     : : "i" (INT_SYS_PRIORITY),
+		         "a" (priority)
+		     : "cc", "memory");
+}
+
 
 /*****************************************************************************
- * sys_printchar(color, character)
+ * sys_printchar(character)
  *
  *   Prints a character with a color 
  *
  *****************************************************************************/
 
 static inline void
-sys_printchar(int color, int character)
+sys_printchar(int character)
 {
 	asm volatile("int %0\n"
 		     : : "i" (INT_SYS_PRINTCHAR),
-		         "a" (color),
-		         "b" (character)
+		         "a" (character)
 		     : "cc", "memory");
 }
 
