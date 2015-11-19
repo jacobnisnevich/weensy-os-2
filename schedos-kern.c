@@ -287,8 +287,9 @@ schedule(void)
 			}
 			
 			// Reset the run times
-			for (pid = 0; pid < NPROCS; pid++) {
-				proc_array[pid].p_run_times = 0;
+			pid_t i;
+			for (i = 0; i < NPROCS; i++) {
+				proc_array[i].p_run_times = 0;
 			}
 		}
 	}
