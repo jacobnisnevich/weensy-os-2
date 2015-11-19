@@ -80,18 +80,18 @@ sys_priority(int priority)
 
 
 /*****************************************************************************
- * sys_shareshare
+ * sys_share
  *
  *   Assigns a priority (1 to 4) 
  *
  *****************************************************************************/
 
 static inline void
-sys_priority(int share)
+sys_share(int share)
 {
 	asm volatile("int %0\n"
-		     : : "i" (INT_SYS_PRIORITY),
-		         "a" (priority)
+		     : : "i" (INT_SYS_SHARE),
+		         "a" (share)
 		     : "cc", "memory");
 }
 
