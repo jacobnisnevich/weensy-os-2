@@ -86,4 +86,22 @@ sys_priority(int priority)
  *
  *****************************************************************************/
 
+
+/*****************************************************************************
+ * sys_printchar(color, character)
+ *
+ *   Prints a character with a color 
+ *
+ *****************************************************************************/
+
+static inline void
+sys_printchar(int color, int character)
+{
+	asm volatile("int %0\n"
+		     : : "i" (INT_SYS_PRINTCHAR,
+		         "a" (color),
+		         "b" (character)
+		     : "cc", "memory");
+}
+
 #endif

@@ -112,22 +112,6 @@ start(void)
 		// Load process and set EIP, based on ELF image
 		program_loader(i - 1, &proc->p_registers.reg_eip);
 
-		// Set priorities
-		switch(i) {
-			case 1:
-				proc->p_priority = __PRIORITY_4__;
-				break;
-			case 2:
-				proc->p_priority = __PRIORITY_3__;
-				break;
-			case 3:
-				proc->p_priority = __PRIORITY_2__;
-				break;
-			case 4:
-				proc->p_priority = __PRIORITY_1__;
-				break;
-		}
-
 		// Mark the process as runnable!
 		proc->p_state = P_RUNNABLE;
 	}
@@ -178,6 +162,9 @@ interrupt(registers_t *reg)
 	case INT_SYS_PRIORITY:
 		current->p_priority = reg->reg_eax;
 		run(current);
+
+	case INT_SYS_PRINTCHAR:
+
 
 	case INT_SYS_YIELD:
 		// The 'sys_yield' system call asks the kernel to schedule
@@ -281,6 +268,8 @@ schedule(void)
 				run(&proc_array[pid]);
 			}
 		}
+	} else if (scheduling_algorithm == __EXERCISE_4B__) {
+
 	}
 
 	// If we get here, we are running an unknown scheduling algorithm.

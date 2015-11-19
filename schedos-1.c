@@ -18,21 +18,23 @@
 #define PRINTCHAR	('1' | 0x0C00)
 #endif
 
+#ifndef PRIORITY
+#define PRIORITY 4
+#endif
+
 // UNCOMMENT THE NEXT LINE TO USE EXERCISE 8 CODE INSTEAD OF EXERCISE 6
 // #define __EXERCISE_8__
-// Use the following structure to choose between them:
-// #infdef __EXERCISE_8__
-// (exercise 6 code)
-// #else
-// (exercise 8 code)
-// #endif
 
 void
 start(void)
 {
+	sys_priority(PRIORITY);
+
 	int i;
 
 	for (i = 0; i < RUNCOUNT; i++) {
+
+		#infdef __EXERCISE_8__
 
 		// Get lock
 		while (atomic_swap(&lock, 1) != 0)
@@ -46,6 +48,10 @@ start(void)
 
 		// Yield after printing
 		sys_yield();
+
+		#else
+
+		#endif
 	}
 
 	// Yield forever.
