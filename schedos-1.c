@@ -34,7 +34,7 @@ start(void)
 
 	for (i = 0; i < RUNCOUNT; i++) {
 
-		#infdef __EXERCISE_8__
+		#ifndef __EXERCISE_8__
 
 		// Get lock
 		while (atomic_swap(&lock, 1) != 0)
