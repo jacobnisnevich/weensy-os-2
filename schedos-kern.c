@@ -278,11 +278,11 @@ schedule(void)
 			while (1) {
 				if (proc_array[pid].p_state == P_RUNNABLE) {
 					// skip if run more than share
-					if (proc_array[pid].p_run_t >= proc_array[pid].p_share) {
-						proc_array[pid].p_run_t = 0;
+					if (proc_array[pid].p_run_times >= proc_array[pid].p_share) {
+						proc_array[pid].p_run_times = 0;
 					}
 					else {
-						proc_array[pid].p_run_t++;
+						proc_array[pid].p_run_times++;
 						run(&proc_array[pid]);
 					}
 				}
