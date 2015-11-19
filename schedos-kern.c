@@ -275,23 +275,20 @@ schedule(void)
 			}
 		}
 	} else if (scheduling_algorithm == __EXERCISE_4B__) {
-		pid = 0;
-
-		while (1) {
-
-			// Run process if the run_times is < their share
-			if (proc_array[pid].p_run_times < proc_array[pid].p_share && proc_array[pid].p_state == P_RUNNABLE) {
-				proc_array[pid].p_run_times++;
-				pid = (pid + 1) % NPROCS;
-				run(&proc_array[pid]);
+			while (1) {
+				if (proc_array[pid].p_state == P_RUNNABLE) {
+					// skip if run more than share
+					if (proc_array[pid].p_run_t >= proc_array[pid].p_share) {
+						proc_array[pid].p_run_t = 0;
+					}
+					else {
+						proc_array[pid].p_run_t++;
+						run(&proc_array[pid]);
+					}
+				}
+				
+				pid = (pid + 1) % NPROCS; // don't change procs until share up
 			}
-			
-			// Reset the run times
-			pid_t i;
-			for (i = 0; i < NPROCS; i++) {
-				proc_array[i].p_run_times = 0;
-			}
-		}
 	}
 
 	// If we get here, we are running an unknown scheduling algorithm.
